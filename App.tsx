@@ -14,7 +14,7 @@ import {
   Inter_700Bold,
   Inter_900Black
 } from "@expo-google-fonts/inter";
-import theme from './src/theme';
+import theme from './src/THEME';
 import Loading from './src/components/Loading';
 
 
