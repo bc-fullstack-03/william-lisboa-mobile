@@ -1,15 +1,21 @@
-import { View, Image } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 
-import logo from "../../../assets/logo.png"
 import { styles } from './styles';
-import { Heading } from '../../components/Heading';
+import AuthForm from '../../components/AuthForm';
 
 function Login({navigation}) {
     return (
-      <View style={styles.container}>
-        <Image source={logo} resizeMethod='scale' />
-        <Heading title='Sysmap Parrot' subtitle='Faça login e começe a usar!' />
-      </View>
+      <>
+        <AuthForm 
+          authFormSubtitle='Faça login e começe a usar!'
+          submitFormButtonText='Entrar'
+        />
+        <TouchableOpacity 
+          onPress={()=> { navigation.navigate("SignUp")}}
+        >
+          <Text style={styles.link}>Não possui conta? Crie uma agora!</Text>
+        </TouchableOpacity>
+        </>
     );
 }
 
