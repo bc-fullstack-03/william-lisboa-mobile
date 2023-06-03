@@ -9,14 +9,19 @@ import { Heading } from "../Heading";
 import THEME from "../../THEME";
 import { styles } from "./styles";
 import logo from '../../../assets/logo.png'
+import { Auth } from "../../Model/Auth";
+import { useState } from "react";
 
 interface AuthFormProps {
-    authFormSubtitle: string;
-    submitFormButtonText: string;
-    signUp?: boolean;
+  authFormSubtitle: string;
+  submitFormButtonText: string;
+  submitFormButtonAction: (auth: Auth) => void;
 }
 
 function AuthForm(props: AuthFormProps){
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+
     return (
         <KeyboardAvoidingView
          behavior={ Platform.OS === "ios" ? "padding" : 'position' }
@@ -28,7 +33,13 @@ function AuthForm(props: AuthFormProps){
           <Input.Root>
             <Input.Icon>
               <Envelope color={THEME.COLORS.INPUT} />
-              <Input.Input placeholder='Digite seu e-mail' autoCapitalize='none' />
+              <Input.Input 
+                value={user} 
+                onChangeText={setUser} 
+                placeholder='Digite seu e-mail' 
+                autoCapitalize='none' 
+                autoCorrect={false}
+              />
             </Input.Icon>
           </Input.Root>
           <Spacer />
@@ -36,6 +47,8 @@ function AuthForm(props: AuthFormProps){
             <Input.Icon>
               <Lock color={THEME.COLORS.INPUT} />
               <Input.Input 
+               value={password} 
+               onChangeText={setPassword}
                placeholder='********' 
                autoCapitalize='none' 
                autoCorrect={false}
@@ -44,7 +57,9 @@ function AuthForm(props: AuthFormProps){
             </Input.Icon>
           </Input.Root>
           <Spacer />
-          <Button title={props.submitFormButtonText} onPress={()=> {}} />
+          <Button title={props.submitFormButtonText} onPress={() => {
+                props.submitFormButtonAction({ user, password })
+            }}/>
         </KeyboardAvoidingView>
     )
 }
