@@ -1,12 +1,17 @@
-import * as React from 'react';
+import React, {useContext, useEffect} from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import Login from './src/Screens/Login';
 import SignUp from './src/Screens/SignUp';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Friends from './src/Screens/Friends';
 import Home from './src/Screens/Home';
 import Profile from './src/Screens/Profile';
+import { Provider as AuthProvider, Context as AuthContext } from './src/context/AuthContext';
+
+import Loading from './src/components/Loading';
+
 import {
   useFonts,
   Inter_400Regular,
@@ -15,7 +20,6 @@ import {
   Inter_900Black
 } from "@expo-google-fonts/inter";
 import theme from './src/THEME';
-import Loading from './src/components/Loading';
 
 
 const Stack = createNativeStackNavigator();
@@ -31,7 +35,7 @@ const AppTheme = {
 }
 
 function App() {
-  const isLoggedIn = false;
+  const { token,tryLocalLogin, isLoading } = useContext(AuthContext);
 
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -40,13 +44,17 @@ function App() {
     Inter_900Black
   });
 
-  if (!fontsLoaded) {
+  useEffect(() => {
+    tryLocalLogin();
+  }, [])
+
+  if (!fontsLoaded || isLoading) {
     return <Loading />;
   }
 
   return (
     <NavigationContainer theme={AppTheme}>
-      { isLoggedIn ? (
+      { token ? (
           <Tab.Navigator>
             <Tab.Screen name="Friends" component={Friends} />
             <Tab.Screen name="Home" component={Home} />
@@ -67,4 +75,10 @@ function App() {
   );
 }
 
-export default App;
+export default () => {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  )
+}
