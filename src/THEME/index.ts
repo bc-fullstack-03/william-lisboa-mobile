@@ -9,6 +9,8 @@ export default {
       TEXT: "#EEEEEE",
 
       BUTTON: '#81D8F7',
+
+      ERROR: "red"
     },
     FONT_FAMILY: {
         REGULAR: "Inter_400Regular",
