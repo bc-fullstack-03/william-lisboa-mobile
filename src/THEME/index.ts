@@ -1,7 +1,10 @@
 export default {
     COLORS: {
       BACKGROUND_900: "#121214",
+      BACKGROUND_800: "#18181B",
       BACKGROUND_600: '#202024',
+
+      BORDER: "#7C7C8A",
 
       INPUT: '#7C7C8A',
 
