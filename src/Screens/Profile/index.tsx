@@ -1,11 +1,22 @@
-import { View, Text } from 'react-native';
+import { useContext } from 'react';
+import { SafeAreaView, Text, View} from 'react-native';
+import { UserCircle } from 'phosphor-react-native';
+import { Context as AuthContext } from '../../context/AuthContext';
+import { styles } from './styles';
+import Button from '../../components/Button';
 
 function Profile() {
+  const { user, logout } = useContext(AuthContext)
+
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Profile Screen</Text>
-      </View>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.heading}>
+          <UserCircle color='white' size={48} weight='thin' />
+          <Text style={styles.userName}>{user}</Text>
+        </View>
+        <Button title="Sair" onPress={logout} />
+      </SafeAreaView>
     );
 }
 
-export default Profile
+export default Profile;
