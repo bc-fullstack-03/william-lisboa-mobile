@@ -1,6 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { House, User, UsersThree } from 'phosphor-react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Login from './src/Screens/Login';
@@ -20,6 +21,7 @@ import {
   Inter_900Black
 } from "@expo-google-fonts/inter";
 import theme from './src/THEME';
+import THEME from './src/THEME';
 
 
 const Stack = createNativeStackNavigator();
@@ -55,7 +57,25 @@ function App() {
   return (
     <NavigationContainer theme={AppTheme}>
       { token ? (
-          <Tab.Navigator>
+          <Tab.Navigator
+           screenOptions={({ route }) => ({
+            tabBarIcon: ({ color, size }) => {
+              switch (route.name) {
+                case "Home":
+                  return <House size={size} color={color} />;
+                case "Friends":
+                  return <UsersThree size={size} color={color} />;
+                case "Profile":
+                  return <User size={size} color={color} />;
+                default:
+                  return null;
+              }
+            },
+            tabBarStyle: {backgroundColor: THEME.COLORS.BACKGROUND_800},
+            tabBarShowLabel: false,
+            headerShown: false,
+           })}
+          >
             <Tab.Screen name="Friends" component={Friends} />
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Profile" component={Profile} />
