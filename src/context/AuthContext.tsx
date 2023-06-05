@@ -127,12 +127,27 @@ const Provider = ({ children }: { children: ReactNode }) => {
         }
     }
 
+    const logout = async() => {
+        try {
+            await SecureStore.deleteItemAsync("token");
+            await SecureStore.deleteItemAsync("user");
+            await SecureStore.deleteItemAsync("profile");
+
+            dispatch({
+                type: "logout"
+            });
+        } catch (err) {
+
+        }
+    }
+
     return(
         <Context.Provider
           value={{
             ...state,
             login,
             register,
+            logout,
             tryLocalLogin
           }}
           >
