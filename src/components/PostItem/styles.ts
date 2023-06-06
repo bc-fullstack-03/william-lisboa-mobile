@@ -26,8 +26,8 @@ export const styles = StyleSheet.create({
         marginStart: 12,
     },
     image: {
-        resizeMode: "contain",
-        height: 160,
+        resizeMode: "cover",
+        height: 240,
         borderRadius: 12,
     },
     description: {
