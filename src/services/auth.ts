@@ -18,4 +18,10 @@ async function getProfile() {
     return profile;
 }
 
-export { getAuthHeader, getProfile };
+async function getUser() {
+    const user = await SecureStore.getItemAsync("user");
+
+    return user;
+}
+
+export { getAuthHeader, getProfile, getUser };
