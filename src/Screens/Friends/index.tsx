@@ -9,6 +9,7 @@ import { ProfileItem } from '../../components/ProfileItem';
 function Friends() {
   const { token, profile } = useContext(AuthContext);
   const [profilesList, setProfilesList] = useState([]);
+  const [updatedFollowing,setUpdateFollowing] = useState({})
   const authHeader = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -28,31 +29,24 @@ function Friends() {
 
   async function handleFollow(profileId: string) {
     try {
-      const profileIndex = profilesList.findIndex((profile) => profile._id === profileId);
-
-      if (profileIndex === -1) {
-        return;
-      }
-
-      const profile = profilesList[profileIndex];
-
-      if (profile.followers.includes(profileId)) {
-        return;
-      }
-
       await api.post(`/profiles/${profileId}/follow`, null, authHeader);
+      setProfilesList((profiles) => {
+        const newProfiles = profiles.map((profiles) => {
+          if (profiles._id == profileId) {
+            !profiles.followers.includes(profile) &&
+              profiles.followers.push(profile);
+          }
+          return profiles;
+        });
+        return [...newProfiles];
+      });
 
-      const updatedProfiles = [...profilesList];
-      updatedProfiles[profileIndex] = {
-        ...profile,
-        followers: [...profile.followers, profileId],
-      };
-
-      setProfilesList(updatedProfiles);
+      setUpdateFollowing({updated:true})
     } catch (err) {
-      alert("Erro ao tentar seguir o usuário");
+      alert('Erro ao seguir usuario');
     }
   }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,7 +57,8 @@ function Friends() {
           <ProfileItem 
            key={item._id}
            profile={item} 
-           handleFollowAction={() => handleFollow(item._id)} 
+           shouldUpdateFollow={updatedFollowing}
+           handleFollowAction={handleFollow} 
            userAuth={profile}
           />
         )}
