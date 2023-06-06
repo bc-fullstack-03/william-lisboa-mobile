@@ -22,6 +22,7 @@ import {
 } from "@expo-google-fonts/inter";
 import theme from './src/THEME';
 import THEME from './src/THEME';
+import { navigationRef } from './src/RootNavigation';
 
 
 const Stack = createNativeStackNavigator();
@@ -55,7 +56,7 @@ function App() {
   }
 
   return (
-    <NavigationContainer theme={AppTheme}>
+    <NavigationContainer theme={AppTheme} ref={navigationRef}>
       { token ? (
           <Tab.Navigator
            screenOptions={({ route }) => ({
