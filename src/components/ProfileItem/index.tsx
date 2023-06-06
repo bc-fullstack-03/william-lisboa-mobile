@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 
 
@@ -11,6 +11,7 @@ interface ProfileItemProps {
     profile: Profile;
     handleFollowAction: (profileId: string) => void;
     userAuth: string
+    shouldUpdateFollow: {}
 }
 
 interface Profile {
@@ -20,7 +21,16 @@ interface Profile {
     followers: string[];
 }
 
-export function ProfileItem({ profile, handleFollowAction,userAuth}: ProfileItemProps) {
+export function ProfileItem({ profile, handleFollowAction,userAuth, shouldUpdateFollow}: ProfileItemProps) {
+    const [isFollowing,setIsfollowing] = useState<boolean>(false);
+    
+    useEffect(()=>{
+        const n = x => x === userAuth;
+        const y = profile.followers.find(n);
+        
+        setIsfollowing(!!y);
+    },[shouldUpdateFollow])
+
     return (
         <View style={styles.profileCard}>
             <View style={styles.profileIdentification}>
@@ -29,11 +39,18 @@ export function ProfileItem({ profile, handleFollowAction,userAuth}: ProfileItem
             </View>
             <Text style={styles.followers}>{`Seguidores ${profile.followers.length}`}</Text>
             <Text style={styles.following}>{`Seguindo ${profile.following.length}`}</Text>
-            <Button 
-             title={profile.followers.includes(userAuth) ? "Seguindo" : "Seguir"}
-             onPress={() => handleFollowAction(profile._id)} 
-             disabled={profile.followers.includes(userAuth)} 
-            />
+            {isFollowing ? (
+              <Button 
+                title={"Seguindo"}
+                disabled={true} 
+              />
+            ): (
+                <Button 
+                  title={"Seguir"}
+                  onPress={() => handleFollowAction(profile._id)} 
+                  disabled={false} 
+                />
+            )}            
         </View>
     );
 }
