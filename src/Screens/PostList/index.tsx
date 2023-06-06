@@ -1,22 +1,29 @@
-import { useContext } from "react";
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
-import { UserCircle, PencilSimple } from "phosphor-react-native";
+import React, { useContext, useEffect } from "react";
+import { FlatList, SafeAreaView, View } from "react-native";
 import { Context as AuthContext } from "../../context/AuthContext";
+import { Context as PostContext } from "../../context/PostContext";
 
 import { styles } from "./styles";
+import { HomeHeader } from "../../components/HomeHeader";
+import { PostItem } from "../../components/PostItem";
 
 export function PostList({ navigation }) {
     const { user } = useContext(AuthContext)
+    const { posts, getPosts } = useContext(PostContext);
+
+    useEffect (() => {
+        getPosts();
+    }, []);
     
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.heading}>
-                <UserCircle color="white" size={48} weight="thin" />
-                <Text style={styles.userNameText}>{user}</Text>
-                <View style={{ flex: 1 }}></View>
-                <TouchableOpacity onPress={() => navigation.navigate("CreatePost")}>
-                    <PencilSimple color="white" size={40} weight="thin" />
-                </TouchableOpacity>
+          <HomeHeader navigation={navigation} user={user} />
+          <View style={styles.content}>
+                <FlatList
+                    data={posts}
+                    keyExtractor={({ _id }) => _id}
+                    renderItem={({ item }) => <PostItem post={item} />}
+                />
             </View>
         </SafeAreaView>
     );
