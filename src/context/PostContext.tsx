@@ -3,11 +3,16 @@ import { api } from "../services/api";
 import { getAuthHeader, getProfile } from "../services/auth";
 import { Post } from "../Model/Post";
 
+
+import * as SecureStore from "expo-secure-store";
+import { navigate } from "../RootNavigation";
+
 interface PostContext {
     posts: Post[];
     getPosts?: () => void;
     likePost?: ({ postId }: { postId: string }) => void;
     unlikePost?: ({ postId }: { postId: string }) => void;
+    createPost?: ( postData ) => void;
 }
 
 const defaultValue = {
@@ -43,6 +48,10 @@ const Provider = ({ children }: { children: ReactNode }) => {
                 return {
                     posts: [...newPostsUnlike]
                 }
+            case "create_post":
+                return {
+                    post: [action.payload, ...state.posts]
+                };
             default:
                 return state;
         }
@@ -91,6 +100,32 @@ const Provider = ({ children }: { children: ReactNode }) => {
         }
     }
 
+    const createPost = async ({ title, description, image }) => {
+        try {
+            const token = await SecureStore.getItemAsync("token");
+
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("description", description || "");
+            formData.append("file", image);
+
+            const response = await api.post("/posts", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
+            });            
+            dispatch({ 
+                type: "create_post", 
+                payload: { ...response.data },
+            });
+            getPosts()
+            navigate("PostList")
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return(
         <Context.Provider
         value={{
@@ -98,6 +133,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
             getPosts,
             likePost,
             unlikePost,
+            createPost
         }}
         >
             {children}
