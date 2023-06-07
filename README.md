@@ -1,4 +1,4 @@
-# TypeScript Example
+# Parrot
 
 <p>
   <!-- iOS -->
@@ -9,28 +9,59 @@
   <img alt="Supports Expo Web" longdesc="Supports Expo Web" src="https://img.shields.io/badge/web-4630EB.svg?style=flat-square&logo=GOOGLE-CHROME&labelColor=4285F4&logoColor=fff" />
 </p>
 
-```sh
-npx create-react-native-app -t with-typescript
-```
+Parrot is a social network focused on the mobile platform, it is formed by people that share similar interests and make use of different content formats.
 
-TypeScript is a superset of JavaScript which gives you static types and powerful tooling in Visual Studio Code including autocompletion and useful inline warnings for type errors.
+## Screenshots
 
-## 🚀 How to use
+<table>
+    <tr>
+        <td align="center" >Login</td>
+        <td align="center">Signup</td>
+        <td align="center">Feed</td>
+    </tr>
+    <tr>
+        <td>
+          <img src="https://github.com/bc-fullstack-03/william-lisboa-mobile/assets/66382974/35c19b7a-a81a-4129-8180-77b670812f99" width="200" height="400" />           </td>
+        <td>
+          <img src="https://github.com/bc-fullstack-03/william-lisboa-mobile/assets/66382974/10db5bc8-3e66-4f67-81cb-074521438a40" width="200" height="400" />           </td>
+        <td>
+          <img src="https://github.com/bc-fullstack-03/william-lisboa-mobile/assets/66382974/26fa07da-3204-4471-9539-b7c7fd2f2d67" width="200" height="400" />           </td>
+    </tr>
+    <tr>
+        <td align="center">Friends</td>
+        <td align="center">Post</td>
+        <td align="center">Profile</td>
+    </tr>
+        <td>
+          <img src="https://github.com/bc-fullstack-03/william-lisboa-mobile/assets/66382974/b221599a-dbea-4589-ae67-8f4a51b32769" width="200" height="400" />           </td>
+        <td>
+          <img src="https://github.com/bc-fullstack-03/william-lisboa-mobile/assets/66382974/4a515fd9-caf9-4ecf-b574-437a28326200" width="200" height="400" />           </td>
+        <td>
+          <img src="https://github.com/bc-fullstack-03/william-lisboa-mobile/assets/66382974/e33daa25-bf85-411f-aacd-7fe0e4783bbf" width="200" height="400" />           </td>
+</table>
 
-#### Creating a new project
+## Features
 
-- Install the CLI: `npm i -g expo-cli`
-- Create a project: `npx create-react-native-app -t with-typescript`
-- `cd` into the project
+- Register User
+- Login User
+- Logout Account
+- Publish Post
+- Follow Friends
+- Like Post
+- Comment Post
+- Cross platform
 
-### Adding TypeScript to existing projects
+## Tech Stack
 
-- Create a blank TypeScript config: `touch tsconfig.json`
-- Run `yarn start` or `npm run start` to automatically configure TypeScript
-- Rename files to TypeScript, `.tsx` for React components and `.ts` for plain typescript files
+- React-native
+- Expo
+- Axios
+- jwt-decode
+- phosphor-react-native
+- expo-image-picker
+- typescript
 
-> 💡 You can disable the TypeScript setup in Expo CLI with the environment variable `EXPO_NO_TYPESCRIPT_SETUP=1 expo start`
 
-## 📝 Notes
+## Authors
 
-- [Expo TypeScript guide](https://docs.expo.dev/versions/latest/guides/typescript/)
+- [@will763](https://github.com/will763)
